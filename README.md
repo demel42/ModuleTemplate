@@ -29,18 +29,6 @@ Alternativ kann das Modul über [Module Control](https://www.symcon.de/service/d
 
 ### b. Einrichtung in IPS
 
-#### ModuleTemplate IO
-In IP-Symcon nun unterhalb von _I/O Instanzen_ die Funktion _Instanz hinzufügen_ auswählen und als Hersteller _Warema_ angeben.
-In der IO-Instanz muss nur der Hostname/die IP-Adresse des WebControl angegeben werden.
-Mittels _Zugriff prüfen_ kann getestet werden (Hinweis: dauert ein paar Sekunden)
-
-#### ModuleTemplate Config
-In IP-Symcon nun unterhalb von _Konfigurator Instanzen_ die Funktion _Instanz hinzufügen_ auswählen und als Hersteller _Warema_ angeben.
-In dem Konfigurator werden nun alle eingerichteten Räume/Kanäle aufgelistet; eine Anlage der Geräte-Instanz kann entsprechend erfolgen
-
-#### ModuleTemplate Device
-Die Geräte-Instanz wird über dem Konfigurator angelegt. In der _Basis-Konfiguration_ ist Raum/Kanal sowie der Produkt-Typ eingetragen. Achtung: die Warema-Komponenten werden via Raum+Kanal angesprochen, bei Änderung der Zuordnung muss das ggfs. nachgeführt werden.
-
 ## 4. Funktionsreferenz
 
 alle Funktionen sind über _RequestAction_ der jew. Variablen ansteuerbar
