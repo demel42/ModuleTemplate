@@ -15,6 +15,8 @@ class ModuleTemplateDevice extends IPSModule
         parent::Create();
 
         $this->RegisterPropertyBoolean('module_disable', false);
+        
+        $this->InstallVarProfiles(false);
     }
 
     private function CheckConfiguration()
