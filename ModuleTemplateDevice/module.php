@@ -109,7 +109,7 @@ class ModuleTemplateDevice extends IPSModule
         $this->SetStatus(IS_ACTIVE);
 
         if (IPS_GetKernelRunlevel() == KR_READY) {
-            $this->SetUpdateInterval();
+            $this->OverwriteUpdateInterval();
         }
     }
 
