@@ -10,6 +10,15 @@ class ModuleTemplateDevice extends IPSModule
     use ModuleTemplate\StubsCommonLib;
     use ModuleTemplateLocalLib;
 
+	private $ModuleDir;
+
+    public function __construct(string $InstanceID)
+    {
+        parent::__construct($InstanceID);
+
+        $this->ModuleDir = __DIR__;
+    }
+
     public function Create()
     {
         parent::Create();
@@ -92,7 +101,7 @@ class ModuleTemplateDevice extends IPSModule
         $module_disable = $this->ReadPropertyBoolean('module_disable');
         if ($module_disable) {
             $this->MaintainTimer('UpdateStatus', 0);
-            $this->SetStatus(self::$IS_DEACTIVATED);
+            $this->SetStatus(IS_INACTIVE);
             return;
         }
 
