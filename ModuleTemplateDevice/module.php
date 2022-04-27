@@ -10,7 +10,7 @@ class ModuleTemplateDevice extends IPSModule
     use ModuleTemplate\StubsCommonLib;
     use ModuleTemplateLocalLib;
 
-	private $ModuleDir;
+    private $ModuleDir;
 
     public function __construct(string $InstanceID)
     {
@@ -76,7 +76,7 @@ class ModuleTemplateDevice extends IPSModule
     {
         parent::ApplyChanges();
 
-		$this->MaintainReferences();
+        $this->MaintainReferences();
 
         if ($this->CheckPrerequisites() != false) {
             $this->MaintainTimer('UpdateStatus', 0);
