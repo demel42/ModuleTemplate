@@ -223,13 +223,13 @@ class ModuleTemplateDevice extends IPSModule
 
     private function LocalRequestAction($ident, $value)
     {
-        $r = false;
+        $r = true;
         switch ($ident) {
             case 'UpdateStatus':
                 $this->UpdateStatus();
-                $r = true;
                 break;
             default:
+                $r = false;
                 break;
         }
         return $r;
