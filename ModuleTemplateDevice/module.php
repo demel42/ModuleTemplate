@@ -80,19 +80,19 @@ class ModuleTemplateDevice extends IPSModule
 
         if ($this->CheckPrerequisites() != false) {
             $this->MaintainTimer('UpdateStatus', 0);
-            $this->SetStatus(self::$IS_INVALIDPREREQUISITES);
+            $this->MaintainStatus(self::$IS_INVALIDPREREQUISITES);
             return;
         }
 
         if ($this->CheckUpdate() != false) {
             $this->MaintainTimer('UpdateStatus', 0);
-            $this->SetStatus(self::$IS_UPDATEUNCOMPLETED);
+            $this->MaintainStatus(self::$IS_UPDATEUNCOMPLETED);
             return;
         }
 
         if ($this->CheckConfiguration() != false) {
             $this->MaintainTimer('UpdateStatus', 0);
-            $this->SetStatus(self::$IS_INVALIDCONFIG);
+            $this->MaintainStatus(self::$IS_INVALIDCONFIG);
             return;
         }
 
@@ -101,11 +101,11 @@ class ModuleTemplateDevice extends IPSModule
         $module_disable = $this->ReadPropertyBoolean('module_disable');
         if ($module_disable) {
             $this->MaintainTimer('UpdateStatus', 0);
-            $this->SetStatus(IS_INACTIVE);
+            $this->MaintainStatus(IS_INACTIVE);
             return;
         }
 
-        $this->SetStatus(IS_ACTIVE);
+        $this->MaintainStatus(IS_ACTIVE);
 
         if (IPS_GetKernelRunlevel() == KR_READY) {
             $this->OverwriteUpdateInterval();
@@ -221,14 +221,31 @@ class ModuleTemplateDevice extends IPSModule
         $this->SendDebug(__FUNCTION__, $this->PrintTimer('UpdateStatus'), 0);
     }
 
+    private function LocalRequestAction($ident, $value)
+    {
+        $r = false;
+        switch ($ident) {
+            case 'UpdateStatus':
+                $this->UpdateStatus();
+                $r = true;
+                break;
+            default:
+                break;
+        }
+        return $r;
+    }
+
     public function RequestAction($ident, $value)
     {
+        if ($this->LocalRequestAction($ident, $value)) {
+            return;
+        }
         if ($this->CommonRequestAction($ident, $value)) {
             return;
         }
 
         if ($this->GetStatus() == IS_INACTIVE) {
-            $this->SendDebug(__FUNCTION__, 'instance is inactive, skip', 0);
+            $this->SendDebug(__FUNCTION__, $this->GetStatusText() . ' => skip', 0);
             return;
         }
 
@@ -236,9 +253,6 @@ class ModuleTemplateDevice extends IPSModule
 
         $r = false;
         switch ($ident) {
-            case 'UpdateStatus':
-                $this->UpdateStatus();
-                break;
             default:
                 $this->SendDebug(__FUNCTION__, 'invalid ident ' . $ident, 0);
                 break;
