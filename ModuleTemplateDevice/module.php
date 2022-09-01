@@ -96,7 +96,7 @@ class ModuleTemplateDevice extends IPSModule
             return;
         }
 
-        $vops = 0;
+        $vpos = 1;
 
         $module_disable = $this->ReadPropertyBoolean('module_disable');
         if ($module_disable) {
