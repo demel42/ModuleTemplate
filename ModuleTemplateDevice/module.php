@@ -25,6 +25,8 @@ class ModuleTemplateDevice extends IPSModule
 
         $this->RegisterPropertyBoolean('module_disable', false);
 
+        $this->RegisterPropertyBoolean('log_no_parent', true);
+
         $this->RegisterPropertyInteger('update_interval', 60);
 
         $this->RegisterAttributeString('UpdateInfo', '');
@@ -123,7 +125,7 @@ class ModuleTemplateDevice extends IPSModule
         $formElements[] = [
             'type'    => 'CheckBox',
             'name'    => 'module_disable',
-            'caption' => 'Disable instance'
+            'caption' => 'Disable instance',
         ];
 
         $formElements[] = [
@@ -132,6 +134,12 @@ class ModuleTemplateDevice extends IPSModule
             'suffix'  => 'Seconds',
             'minimum' => 0,
             'caption' => 'Update interval',
+        ];
+
+        $formElements[] = [
+            'type'    => 'CheckBox',
+            'name'    => 'log_no_parent',
+            'caption' => 'Generate message when the gateway is inactive',
         ];
 
         return $formElements;
@@ -159,7 +167,7 @@ class ModuleTemplateDevice extends IPSModule
         $formActions[] = [
             'type'      => 'ExpansionPanel',
             'caption'   => 'Expert area',
-            'expanded ' => false,
+            'expanded'  => false,
             'items'     => [
                 $this->GetInstallVarProfilesFormItem(),
             ],
@@ -168,7 +176,7 @@ class ModuleTemplateDevice extends IPSModule
         $formActions[] = [
             'type'      => 'ExpansionPanel',
             'caption'   => 'Test area',
-            'expanded ' => false,
+            'expanded'  => false,
             'items'     => [
                 [
                     'type'    => 'TestCenter',
@@ -210,13 +218,16 @@ class ModuleTemplateDevice extends IPSModule
             return;
         }
 
-        /*
+		/*
         if ($this->HasActiveParent() == false) {
-            $this->SendDebug(__FUNCTION__, 'has no active parent', 0);
-            $this->LogMessage('has no active parent instance', KL_WARNING);
+            $this->SendDebug(__FUNCTION__, 'has no active parent/gateway', 0);
+            $log_no_parent = $this->ReadPropertyBoolean('log_no_parent');
+            if ($log_no_parent) {
+                $this->LogMessage($this->Translate('Instance has no active gateway'), KL_WARNING);
+            }
             return;
         }
-         */
+		*/
 
         $this->SendDebug(__FUNCTION__, $this->PrintTimer('UpdateStatus'), 0);
     }
