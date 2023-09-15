@@ -16,7 +16,12 @@ class ModuleTemplateDevice extends IPSModule
     {
         parent::__construct($InstanceID);
 
-        $this->ModuleDir = __DIR__;
+        $this->CommonContruct(__DIR__);
+    }
+
+    public function __destruct()
+    {
+        $this->CommonDestruct();
     }
 
     public function Create()
@@ -29,7 +34,9 @@ class ModuleTemplateDevice extends IPSModule
 
         $this->RegisterPropertyInteger('update_interval', 60);
 
-        $this->RegisterAttributeString('UpdateInfo', '');
+        $this->RegisterAttributeString('UpdateInfo', json_encode([]));
+        $this->RegisterAttributeString('ModuleStats', json_encode([]));
+
         $this->RegisterAttributeString('external_update_interval', '');
 
         $this->InstallVarProfiles(false);
@@ -218,7 +225,7 @@ class ModuleTemplateDevice extends IPSModule
             return;
         }
 
-		/*
+        /*
         if ($this->HasActiveParent() == false) {
             $this->SendDebug(__FUNCTION__, 'has no active parent/gateway', 0);
             $log_no_parent = $this->ReadPropertyBoolean('log_no_parent');
@@ -227,7 +234,7 @@ class ModuleTemplateDevice extends IPSModule
             }
             return;
         }
-		*/
+         */
 
         $this->SendDebug(__FUNCTION__, $this->PrintTimer('UpdateStatus'), 0);
     }
