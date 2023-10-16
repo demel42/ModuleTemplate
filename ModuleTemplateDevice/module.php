@@ -10,8 +10,6 @@ class ModuleTemplateDevice extends IPSModule
     use ModuleTemplate\StubsCommonLib;
     use ModuleTemplateLocalLib;
 
-    private $ModuleDir;
-
     public function __construct(string $InstanceID)
     {
         parent::__construct($InstanceID);
